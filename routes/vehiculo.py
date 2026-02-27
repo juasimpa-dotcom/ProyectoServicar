@@ -113,7 +113,7 @@ async def vehiculos_por_usuario(id_usuario: int, conn=Depends(get_conexion)):
 # ── POST / ────────────────────────────────────────────────────
 @router.post("/")
 async def insertar_vehiculo(vehiculo: Vehiculo, conn=Depends(get_conexion)): 
-    print("Insertando un vehiculo para GITHUB")
+    print("Insertando un vehiculo para GITHUB actualizacion 2")
     consulta = """
         INSERT INTO vehiculos (id_vehiculo, id_usuario, id_modelo, id_combustible, id_transmision,
                                placa, anio_fabricacion, color, numero_chasis, numero_motor,
