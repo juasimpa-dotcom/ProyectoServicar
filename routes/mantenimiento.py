@@ -35,6 +35,7 @@ class MantenimientoUpdate(BaseModel):
 @router.get("/")
 async def listar_mantenimientos(conn=Depends(get_conexion)):
     print("Listando mantenimientos...")
+    print("hoal")
     consulta = "SELECT * FROM mantenimientos"
     try:
         async with conn.cursor() as cursor:
