@@ -34,22 +34,7 @@ class MantenimientoUpdate(BaseModel):
 # ── GET / ─────────────────────────────────────────────────────
 @router.get("/")
 async def listar_mantenimientos(conn=Depends(get_conexion)):
-    consulta = """
-        SELECT m.id_mantenimiento, v.placa,
-               u_prop.nombres || ' ' || u_prop.apellidos AS propietario,
-               ts.nombre AS tipo_servicio, cm.nombre AS categoria,
-               m.fecha_servicio, m.kilometraje_servicio,
-               mec.nombres || ' ' || mec.apellidos AS mecanico,
-               m.costo_mano_obra, m.observaciones,
-               m.proxima_fecha, m.proximo_kilometraje, m.estado
-        FROM mantenimientos m
-        JOIN vehiculos v                  ON m.id_vehiculo = v.id_vehiculo
-        JOIN usuarios u_prop              ON v.id_usuario = u_prop.id_usuario
-        JOIN tipos_servicio ts            ON m.id_tipo_servicio = ts.id_tipo_servicio
-        JOIN categorias_mantenimiento cm  ON ts.id_categoria = cm.id_categoria
-        LEFT JOIN mecanicos mec           ON m.id_mecanico = mec.id_mecanico
-        ORDER BY m.fecha_servicio DESC
-    """
+    consulta = "SELECT * FROM mantenimientos"
     try:
         async with conn.cursor() as cursor:
             await cursor.execute(consulta)
@@ -61,20 +46,7 @@ async def listar_mantenimientos(conn=Depends(get_conexion)):
 # ── GET /{id} ─────────────────────────────────────────────────
 @router.get("/{id_mantenimiento}")
 async def obtener_mantenimiento(id_mantenimiento: int, conn=Depends(get_conexion)):
-    consulta = """
-        SELECT m.id_mantenimiento, m.id_vehiculo, m.id_tipo_servicio,
-               m.id_mecanico, m.id_usuario_registro,
-               v.placa, ts.nombre AS tipo_servicio, cm.nombre AS categoria,
-               m.fecha_servicio, m.kilometraje_servicio, m.costo_mano_obra,
-               m.observaciones, m.proxima_fecha, m.proximo_kilometraje, m.estado,
-               mec.nombres || ' ' || mec.apellidos AS mecanico
-        FROM mantenimientos m
-        JOIN vehiculos v                  ON m.id_vehiculo = v.id_vehiculo
-        JOIN tipos_servicio ts            ON m.id_tipo_servicio = ts.id_tipo_servicio
-        JOIN categorias_mantenimiento cm  ON ts.id_categoria = cm.id_categoria
-        LEFT JOIN mecanicos mec           ON m.id_mecanico = mec.id_mecanico
-        WHERE m.id_mantenimiento = %s
-    """
+    consulta = "SELECT * FROM mantenimientos WHERE id_mantenimiento = %s"
     try:
         async with conn.cursor() as cursor:
             await cursor.execute(consulta, (id_mantenimiento,))
@@ -91,18 +63,7 @@ async def obtener_mantenimiento(id_mantenimiento: int, conn=Depends(get_conexion
 # ── GET historial por vehiculo ────────────────────────────────
 @router.get("/vehiculo/{id_vehiculo}")
 async def historial_por_vehiculo(id_vehiculo: int, conn=Depends(get_conexion)):
-    consulta = """
-        SELECT m.id_mantenimiento, ts.nombre AS tipo_servicio, cm.nombre AS categoria,
-               m.fecha_servicio, m.kilometraje_servicio, m.costo_mano_obra,
-               m.observaciones, m.proxima_fecha, m.proximo_kilometraje, m.estado,
-               mec.nombres || ' ' || mec.apellidos AS mecanico
-        FROM mantenimientos m
-        JOIN tipos_servicio ts            ON m.id_tipo_servicio = ts.id_tipo_servicio
-        JOIN categorias_mantenimiento cm  ON ts.id_categoria = cm.id_categoria
-        LEFT JOIN mecanicos mec           ON m.id_mecanico = mec.id_mecanico
-        WHERE m.id_vehiculo = %s
-        ORDER BY m.fecha_servicio DESC
-    """
+    consulta = "SELECT * FROM mantenimientos WHERE id_vehiculo = %s ORDER BY fecha_servicio DESC"
     try:
         async with conn.cursor() as cursor:
             await cursor.execute(consulta, (id_vehiculo,))

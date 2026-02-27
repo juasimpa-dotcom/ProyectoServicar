@@ -27,13 +27,7 @@ class UsuarioUpdate(BaseModel):
 # ── GET / ─────────────────────────────────────────────────────
 @router.get("/")
 async def listar_usuarios(conn=Depends(get_conexion)):
-    consulta = """
-        SELECT u.id_usuario, r.nombre AS rol, u.nombres, u.apellidos,
-               u.email, u.telefono, u.activo, u.creado_en
-        FROM usuarios u
-        JOIN roles r ON u.id_rol = r.id_rol
-        ORDER BY u.id_usuario
-    """
+    consulta = "SELECT * FROM usuarios"
     try:
         async with conn.cursor() as cursor:
             await cursor.execute(consulta)
@@ -45,17 +39,7 @@ async def listar_usuarios(conn=Depends(get_conexion)):
 # ── GET /{id} ─────────────────────────────────────────────────
 @router.get("/{id_usuario}")
 async def obtener_usuario(id_usuario: int, conn=Depends(get_conexion)):
-    consulta = """
-<<<<<<< HEAD
-        SELECT u.id_usuario, u.id_rol, r.nombre AS rol, u.nombres, u.apellidos,
-               u.email, u.telefono, u.activo, u.creado_en
-=======
-        SELECT *
->>>>>>> dcebb10 (commit secundario)
-        FROM usuarios u
-        JOIN roles r ON u.id_rol = r.id_rol
-        WHERE u.id_usuario = %s
-    """
+    consulta = "SELECT * FROM usuarios WHERE id_usuario = %s"
     try:
         async with conn.cursor() as cursor:
             await cursor.execute(consulta, (id_usuario,))

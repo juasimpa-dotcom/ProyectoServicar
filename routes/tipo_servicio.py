@@ -26,14 +26,7 @@ class TipoServicioUpdate(BaseModel):
 # ── GET / ─────────────────────────────────────────────────────
 @router.get("/")
 async def listar_tipos_servicio(conn=Depends(get_conexion)):
-    consulta = """
-        SELECT ts.id_tipo_servicio, ts.nombre, ts.descripcion,
-               ts.intervalo_km, ts.intervalo_dias, ts.activo,
-               cm.nombre AS categoria
-        FROM tipos_servicio ts
-        JOIN categorias_mantenimiento cm ON ts.id_categoria = cm.id_categoria
-        ORDER BY cm.nombre, ts.nombre
-    """
+    consulta = "SELECT * FROM tipos_servicio"
     try:
         async with conn.cursor() as cursor:
             await cursor.execute(consulta)
@@ -45,14 +38,7 @@ async def listar_tipos_servicio(conn=Depends(get_conexion)):
 # ── GET /{id} ─────────────────────────────────────────────────
 @router.get("/{id_tipo_servicio}")
 async def obtener_tipo_servicio(id_tipo_servicio: int, conn=Depends(get_conexion)):
-    consulta = """
-        SELECT ts.id_tipo_servicio, ts.id_categoria, ts.nombre, ts.descripcion,
-               ts.intervalo_km, ts.intervalo_dias, ts.activo,
-               cm.nombre AS categoria
-        FROM tipos_servicio ts
-        JOIN categorias_mantenimiento cm ON ts.id_categoria = cm.id_categoria
-        WHERE ts.id_tipo_servicio = %s
-    """
+    consulta = "SELECT * FROM tipos_servicio WHERE id_tipo_servicio = %s"
     try:
         async with conn.cursor() as cursor:
             await cursor.execute(consulta, (id_tipo_servicio,))
@@ -69,12 +55,7 @@ async def obtener_tipo_servicio(id_tipo_servicio: int, conn=Depends(get_conexion
 # ── GET por categoria ─────────────────────────────────────────
 @router.get("/categoria/{id_categoria}")
 async def tipos_por_categoria(id_categoria: int, conn=Depends(get_conexion)):
-    consulta = """
-        SELECT id_tipo_servicio, nombre, descripcion, intervalo_km, intervalo_dias
-        FROM tipos_servicio
-        WHERE id_categoria = %s AND activo = TRUE
-        ORDER BY nombre
-    """
+    consulta = "SELECT * FROM tipos_servicio WHERE id_categoria = %s"
     try:
         async with conn.cursor() as cursor:
             await cursor.execute(consulta, (id_categoria,))
