@@ -13,7 +13,6 @@ class Usuario(BaseModel):
     apellidos:   str
     email:       str
     telefono:    Optional[str] = None
-    password_hash: str
     activo:      bool = True
 
 class UsuarioUpdate(BaseModel):
@@ -57,12 +56,12 @@ async def obtener_usuario(id_usuario: int, conn=Depends(get_conexion)):
 @router.post("/")
 async def insertar_usuario(usuario: Usuario, conn=Depends(get_conexion)):
     consulta = """
-        INSERT INTO usuarios (id_usuario, id_rol, nombres, apellidos, email, telefono, password_hash, activo)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        INSERT INTO usuarios (id_usuario, id_rol, nombres, apellidos, email, telefono, activo)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
     """
     parametros = (
         usuario.id_usuario, usuario.id_rol, usuario.nombres, usuario.apellidos,
-        usuario.email, usuario.telefono, usuario.password_hash, usuario.activo
+        usuario.email, usuario.telefono, usuario.activo
     )
     try:
         async with conn.cursor() as cursor:

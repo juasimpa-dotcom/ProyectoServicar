@@ -48,7 +48,6 @@ form.addEventListener("submit", (e) => {
         apellidos:     document.getElementById("apellidos").value,
         email:         document.getElementById("email").value,
         telefono:      document.getElementById("telefono").value || null,
-        password_hash: document.getElementById("password_hash").value,
         activo:        document.getElementById("activo").checked
     };
 
@@ -107,7 +106,6 @@ const prepararEdicion = (id) => {
         document.getElementById("apellidos").value     = data.apellidos;
         document.getElementById("email").value         = data.email;
         document.getElementById("telefono").value      = data.telefono ?? "";
-        document.getElementById("password_hash").value = "***";
         document.getElementById("activo").checked      = data.activo;
 
         modoEdicion = true;
