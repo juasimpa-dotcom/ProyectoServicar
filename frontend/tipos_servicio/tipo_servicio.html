@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERVICAR - Tipos de Servicio</title>
+</head>
+<body>
+    <h1>SERVICAR - Tipos de Servicio</h1>
+
+    <!-- FORMULARIO -->
+    <h2 id="titulo-form">Registrar Tipo de Servicio</h2>
+    <form id="form-tipo">
+        <label>ID Tipo Servicio:</label><br>
+        <input type="number" id="id_tipo_servicio" required><br><br>
+
+        <label>ID Categoría (1=Preventivo, 2=Correctivo, 3=Rev.Técnica, 4=Emergencia):</label><br>
+        <input type="number" id="id_categoria" required><br><br>
+
+        <label>Nombre del Servicio:</label><br>
+        <input type="text" id="nombre" required><br><br>
+
+        <label>Descripción:</label><br>
+        <textarea id="descripcion" rows="3" cols="40"></textarea><br><br>
+
+        <label>Intervalo en KM (cada cuántos km repetir):</label><br>
+        <input type="number" id="intervalo_km" min="1"><br><br>
+
+        <label>Intervalo en Días (cada cuántos días repetir):</label><br>
+        <input type="number" id="intervalo_dias" min="1"><br><br>
+
+        <label>Activo:</label>
+        <input type="checkbox" id="activo" checked><br><br>
+
+        <button type="submit">Guardar</button>
+        <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+    </form>
+
+    <hr>
+
+    <!-- LISTADO -->
+    <h2>Listado de Tipos de Servicio</h2>
+    <div id="listado">
+        <ul id="data">
+            <li>Cargando...</li>
+        </ul>
+    </div>
+
+    <script src="tipo_servicio.js"></script>
+</body>
+</html>
