@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERVICAR - Marcas</title>
+</head>
+<body>
+    <h1>SERVICAR - Gestión de Marcas</h1>
+
+    <h2 id="titulo-form">Registrar Marca</h2>
+    <form id="form-marca">
+        <label>ID Marca:</label><br>
+        <input type="number" id="id_marca" required><br><br>
+
+        <label>Nombre:</label><br>
+        <input type="text" id="nombre" required><br><br>
+
+        <label>Activo:</label>
+        <input type="checkbox" id="activo" checked><br><br>
+
+        <button type="submit">Guardar</button>
+        <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+    </form>
+
+    <hr>
+    <h2>Listado de Marcas</h2>
+    <ul id="data"><li>Cargando...</li></ul>
+
+    <script src="marca.js"></script>
+</body>
+</html>
