@@ -82,6 +82,7 @@ async def insertar_vehiculo(vehiculo: Vehiculo, conn=Depends(get_conexion)):
 
 @router.put("/{id_vehiculo}")
 async def actualizar_vehiculo(id_vehiculo: int, vehiculo: VehiculoUpdate, conn=Depends(get_conexion)):
+    print("ACTUALIZANDO VEHICULO")
     try:
         async with conn.cursor() as cursor:
             await cursor.execute(

@@ -78,4 +78,5 @@ async def eliminar_usuario(id_usuario: int, conn=Depends(get_conexion)):
             await conn.commit()
             return {"mensaje": "Usuario eliminado exitosamente"}
     except Exception as e:
+        print (e)
         raise HTTPException(status_code=400, detail="Error al eliminar usuario")

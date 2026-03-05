@@ -110,5 +110,6 @@ async def eliminar_mantenimiento(id_mantenimiento: int, conn=Depends(get_conexio
             await conn.commit()
             return {"mensaje": "Mantenimiento eliminado exitosamente"}
     except Exception as e:
+        print(e)
         print(f"Error al eliminar mantenimiento: {e}")
         raise HTTPException(status_code=400, detail="Error al eliminar mantenimiento")
