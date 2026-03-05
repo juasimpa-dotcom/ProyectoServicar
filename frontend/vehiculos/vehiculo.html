@@ -1,66 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SERVICAR - Vehículos</title>
-</head>
+<head><meta charset="UTF-8"><title>SERVICAR - Vehículos</title></head>
 <body>
+    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
+        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
+    </div>
     <h1>SERVICAR - Gestión de Vehículos</h1>
-
-    <!-- FORMULARIO -->
     <h2 id="titulo-form">Registrar Vehículo</h2>
     <form id="form-vehiculo">
-        <label>ID Vehículo:</label><br>
-        <input type="number" id="id_vehiculo" required><br><br>
-
-        <label>ID Usuario (propietario):</label><br>
+        <label>ID Usuario:</label><br>
         <input type="number" id="id_usuario" required><br><br>
-
         <label>ID Modelo:</label><br>
         <input type="number" id="id_modelo" required><br><br>
-
-        <label>ID Combustible (1=Gasolina, 2=Diésel, 3=Gas, 4=Eléctrico, 5=Híbrido):</label><br>
+        <label>ID Combustible:</label><br>
         <input type="number" id="id_combustible" required><br><br>
-
-        <label>ID Transmisión (1=Manual, 2=Automática, 3=CVT, 4=Semiautomática):</label><br>
+        <label>ID Transmisión:</label><br>
         <input type="number" id="id_transmision" required><br><br>
-
         <label>Placa:</label><br>
         <input type="text" id="placa" required><br><br>
-
         <label>Año de Fabricación:</label><br>
-        <input type="number" id="anio_fabricacion" min="1900" max="2100" required><br><br>
-
+        <input type="number" id="anio_fabricacion" required><br><br>
         <label>Color:</label><br>
         <input type="text" id="color"><br><br>
-
-        <label>Número de Chasis:</label><br>
+        <label>Nro. Chasis:</label><br>
         <input type="text" id="numero_chasis"><br><br>
-
-        <label>Número de Motor:</label><br>
+        <label>Nro. Motor:</label><br>
         <input type="text" id="numero_motor"><br><br>
-
         <label>Kilometraje Actual:</label><br>
-        <input type="number" id="kilometraje_actual" value="0" min="0" required><br><br>
-
+        <input type="number" id="kilometraje_actual" value="0"><br><br>
         <label>Activo:</label>
         <input type="checkbox" id="activo" checked><br><br>
-
         <button type="submit">Guardar</button>
         <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
     </form>
-
     <hr>
-
-    <!-- LISTADO -->
     <h2>Listado de Vehículos</h2>
-    <div id="listado">
-        <ul id="data">
-            <li>Cargando...</li>
-        </ul>
-    </div>
-
+    <ul id="data"><li>Cargando...</li></ul>
     <script src="vehiculo.js"></script>
 </body>
 </html>

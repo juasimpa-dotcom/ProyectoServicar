@@ -1,47 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SERVICAR - Repuestos por Mantenimiento</title>
-</head>
+<head><meta charset="UTF-8"><title>SERVICAR - Repuestos por Mantenimiento</title></head>
 <body>
+    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
+        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
+    </div>
     <h1>SERVICAR - Repuestos por Mantenimiento</h1>
-
     <h2 id="titulo-form">Agregar Repuesto a Mantenimiento</h2>
     <form id="form-mr">
-        <label>ID:</label><br>
-        <input type="number" id="id" required><br><br>
-
         <label>ID Mantenimiento:</label><br>
         <input type="number" id="id_mantenimiento" required><br><br>
-
         <label>ID Repuesto:</label><br>
         <input type="number" id="id_repuesto" required><br><br>
-
         <label>Cantidad:</label><br>
         <input type="number" id="cantidad" step="0.001" min="0.001" value="1" required><br><br>
-
         <label>Precio Unitario (Bs.):</label><br>
         <input type="number" id="precio_unitario" step="0.01" min="0" required><br><br>
-
         <button type="submit">Guardar</button>
         <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
     </form>
-
     <hr>
-
-    <!-- Filtro por mantenimiento -->
-    <h2>Repuestos por ID de Mantenimiento</h2>
+    <h2>Filtrar por Mantenimiento</h2>
     <label>ID Mantenimiento:</label>
     <input type="number" id="filtro_mantenimiento">
     <button onclick="cargarPorMantenimiento()">Buscar</button>
     <button onclick="cargarTodos()">Ver Todos</button>
-
     <hr>
-    <h2>Listado</h2>
     <ul id="data"><li>Cargando...</li></ul>
-
     <script src="mantenimiento_repuesto.js"></script>
 </body>
 </html>

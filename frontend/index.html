@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERVICAR - Sistema de Mantenimiento Vehicular</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #16213e;
+            padding: 20px 40px;
+            border-bottom: 3px solid #e94560;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            color: #e94560;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .contenido {
+            padding: 40px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .seccion {
+            margin-bottom: 40px;
+        }
+
+        .seccion h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #e94560;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+        }
+
+        .tarjeta {
+            background: #16213e;
+            border: 1px solid #2a2a4a;
+            border-radius: 8px;
+            padding: 20px;
+            text-decoration: none;
+            color: #eee;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .tarjeta:hover {
+            border-color: #e94560;
+            background: #1f2d50;
+            transform: translateY(-2px);
+        }
+
+        .tarjeta .icono {
+            font-size: 28px;
+        }
+
+        .tarjeta .nombre {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .tarjeta .desc {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .tarjeta .ops {
+            margin-top: 8px;
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .get  { background: #1a5e38; color: #4caf50; }
+        .post { background: #1a3d5e; color: #42a5f5; }
+        .put  { background: #5e4a1a; color: #ffb300; }
+        .del  { background: #5e1a1a; color: #ef5350; }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div>
+        <h1>🚗 SERVICAR</h1>
+        <p>Sistema de Mantenimiento Preventivo y Correctivo de Vehículos</p>
+    </div>
+</header>
+
+<div class="contenido">
+
+    <!-- CATÁLOGOS BÁSICOS -->
+    <div class="seccion">
+        <h2>⚙️ Catálogos Básicos</h2>
+        <div class="grid">
+
+            <a class="tarjeta" href="roles/rol.html">
+                <span class="icono">👤</span>
+                <span class="nombre">Roles</span>
+                <span class="desc">Tipos de usuario del sistema</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+            <a class="tarjeta" href="marcas/marca.html">
+                <span class="icono">🏷️</span>
+                <span class="nombre">Marcas</span>
+                <span class="desc">Marcas de vehículos</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+            <a class="tarjeta" href="modelos/modelo.html">
+                <span class="icono">🚙</span>
+                <span class="nombre">Modelos</span>
+                <span class="desc">Modelos por marca</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+            <a class="tarjeta" href="tipos_combustible/tipo_combustible.html">
+                <span class="icono">⛽</span>
+                <span class="nombre">Combustibles</span>
+                <span class="desc">Tipos de combustible</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+            <a class="tarjeta" href="tipos_transmision/tipo_transmision.html">
+                <span class="icono">⚙️</span>
+                <span class="nombre">Transmisiones</span>
+                <span class="desc">Tipos de transmisión</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+            <a class="tarjeta" href="categorias_mantenimiento/categoria_mantenimiento.html">
+                <span class="icono">📂</span>
+                <span class="nombre">Categorías</span>
+                <span class="desc">Categorías de mantenimiento</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- PERSONAL Y USUARIOS -->
+    <div class="seccion">
+        <h2>👥 Personal y Usuarios</h2>
+        <div class="grid">
+
+            <a class="tarjeta" href="usuarios/usuario.html">
+                <span class="icono">🧑</span>
+                <span class="nombre">Usuarios</span>
+                <span class="desc">Personas que acceden al sistema</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+            <a class="tarjeta" href="mecanicos/mecanico.html">
+                <span class="icono">🔧</span>
+                <span class="nombre">Mecánicos</span>
+                <span class="desc">Técnicos que realizan servicios</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- VEHÍCULOS Y SERVICIOS -->
+    <div class="seccion">
+        <h2>🚗 Vehículos y Servicios</h2>
+        <div class="grid">
+
+            <a class="tarjeta" href="vehiculos/vehiculo.html">
+                <span class="icono">🚗</span>
+                <span class="nombre">Vehículos</span>
+                <span class="desc">Registro de vehículos</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+            <a class="tarjeta" href="tipos_servicio/tipo_servicio.html">
+                <span class="icono">🛠️</span>
+                <span class="nombre">Tipos de Servicio</span>
+                <span class="desc">Cambio aceite, frenos, etc.</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+            <a class="tarjeta" href="repuestos/repuesto.html">
+                <span class="icono">🔩</span>
+                <span class="nombre">Repuestos</span>
+                <span class="desc">Catálogo de piezas y repuestos</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- MANTENIMIENTO -->
+    <div class="seccion">
+        <h2>📋 Mantenimiento</h2>
+        <div class="grid">
+
+            <a class="tarjeta" href="mantenimientos/mantenimiento.html">
+                <span class="icono">📋</span>
+                <span class="nombre">Mantenimientos</span>
+                <span class="desc">Registro central de intervenciones</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+            <a class="tarjeta" href="mantenimiento_repuestos/mantenimiento_repuesto.html">
+                <span class="icono">🔗</span>
+                <span class="nombre">Repuestos por Mant.</span>
+                <span class="desc">Repuestos usados en cada servicio</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+            <a class="tarjeta" href="alertas/alerta.html">
+                <span class="icono">🔔</span>
+                <span class="nombre">Alertas</span>
+                <span class="desc">Recordatorios de mantenimiento</span>
+                <div class="ops">
+                    <span class="badge get">GET</span>
+                    <span class="badge post">POST</span>
+                    <span class="badge put">PUT</span>
+                    <span class="badge del">DEL</span>
+                </div>
+            </a>
+
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    SERVICAR v2.0 — Universidad Privada Domingo Savio
+</footer>
+
+</body>
+</html>

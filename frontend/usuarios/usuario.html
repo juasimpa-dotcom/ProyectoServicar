@@ -1,51 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SERVICAR - Usuarios</title>
-</head>
+<head><meta charset="UTF-8"><title>SERVICAR - Usuarios</title></head>
 <body>
+    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
+        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
+    </div>
     <h1>SERVICAR - Gestión de Usuarios</h1>
-
-    <!-- FORMULARIO REGISTRO / EDICIÓN -->
     <h2 id="titulo-form">Registrar Usuario</h2>
     <form id="form-usuario">
-        <label>ID Usuario:</label><br>
-        <input type="number" id="id_usuario" required><br><br>
-
-        <label>ID Rol (1=Admin, 2=Mecánico, 3=Cliente):</label><br>
+        <label>ID Rol:</label><br>
         <input type="number" id="id_rol" required><br><br>
-
         <label>Nombres:</label><br>
         <input type="text" id="nombres" required><br><br>
-
         <label>Apellidos:</label><br>
         <input type="text" id="apellidos" required><br><br>
-
         <label>Email:</label><br>
         <input type="email" id="email" required><br><br>
-
         <label>Teléfono:</label><br>
         <input type="text" id="telefono"><br><br>
-
         <label>Activo:</label>
         <input type="checkbox" id="activo" checked><br><br>
-
         <button type="submit">Guardar</button>
         <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
     </form>
-
     <hr>
-
-    <!-- LISTADO -->
     <h2>Listado de Usuarios</h2>
-    <div id="listado">
-        <ul id="data">
-            <li>Cargando...</li>
-        </ul>
-    </div>
-
+    <ul id="data"><li>Cargando...</li></ul>
     <script src="usuario.js"></script>
 </body>
 </html>

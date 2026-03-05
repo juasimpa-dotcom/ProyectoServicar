@@ -1,35 +1,25 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SERVICAR - Modelos</title>
-</head>
+<head><meta charset="UTF-8"><title>SERVICAR - Modelos</title></head>
 <body>
+    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
+        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
+    </div>
     <h1>SERVICAR - Gestión de Modelos</h1>
-
     <h2 id="titulo-form">Registrar Modelo</h2>
     <form id="form-modelo">
-        <label>ID Modelo:</label><br>
-        <input type="number" id="id_modelo" required><br><br>
-
         <label>ID Marca:</label><br>
         <input type="number" id="id_marca" required><br><br>
-
         <label>Nombre del Modelo:</label><br>
         <input type="text" id="nombre" required><br><br>
-
         <label>Activo:</label>
         <input type="checkbox" id="activo" checked><br><br>
-
         <button type="submit">Guardar</button>
         <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
     </form>
-
     <hr>
     <h2>Listado de Modelos</h2>
     <ul id="data"><li>Cargando...</li></ul>
-
     <script src="modelo.js"></script>
 </body>
 </html>

@@ -1,38 +1,33 @@
-const url = "http://localhost:8000/roles";
+const url = "http://localhost:8000/categorias-mantenimiento";
 const contenedor = document.getElementById("data");
-const form = document.getElementById("form-rol");
+const form = document.getElementById("form-categoria");
 const tituloForm = document.getElementById("titulo-form");
 const btnCancelar = document.getElementById("btn-cancelar");
 let modoEdicion = false, idEditando = null;
 
-const cargarRoles = () => {
+const cargarCategorias = () => {
     fetch(url).then(r => r.json()).then(data => {
         let resultado = "";
         for (let i = 0; i < data.length; i++) {
             resultado += `<li>
-                <p><b>ID:</b> ${data[i].id_rol} | <b>Nombre:</b> ${data[i].nombre} | <b>Activo:</b> ${data[i].activo ? "Sí" : "No"}</p>
+                <p><b>ID:</b> ${data[i].id_categoria} | <b>Nombre:</b> ${data[i].nombre} | <b>Activo:</b> ${data[i].activo ? "Sí" : "No"}</p>
                 <p>${data[i].descripcion ?? ""}</p>
-                <button onclick="prepararEdicion(${data[i].id_rol})">Editar</button>
-                <button onclick="eliminarRol(${data[i].id_rol})">Eliminar</button><hr>
-            </li>`;
+                <button onclick="prepararEdicion(${data[i].id_categoria})">Editar</button>
+                <button onclick="eliminar(${data[i].id_categoria})">Eliminar</button><hr></li>`;
         }
         contenedor.innerHTML = resultado;
-    }).catch(e => console.log("Error:", e));
+    });
 };
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const datos = {
-        nombre:      document.getElementById("nombre").value,
-        descripcion: document.getElementById("descripcion").value || null,
-        activo:      document.getElementById("activo").checked
-    };
+    const datos = { nombre: document.getElementById("nombre").value, descripcion: document.getElementById("descripcion").value || null, activo: document.getElementById("activo").checked };
     if (modoEdicion) {
         fetch(`${url}/${idEditando}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) })
-        .then(r => r.json()).then(d => { alert(d.mensaje); cancelarEdicion(); cargarRoles(); });
+        .then(r => r.json()).then(d => { alert(d.mensaje); cancelarEdicion(); cargarCategorias(); });
     } else {
         fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) })
-        .then(r => r.json()).then(d => { alert(d.mensaje); form.reset(); cargarRoles(); });
+        .then(r => r.json()).then(d => { alert(d.mensaje); form.reset(); cargarCategorias(); });
     }
 });
 
@@ -42,21 +37,21 @@ const prepararEdicion = (id) => {
         document.getElementById("descripcion").value = data.descripcion ?? "";
         document.getElementById("activo").checked    = data.activo;
         modoEdicion = true; idEditando = id;
-        tituloForm.textContent = `Editar Rol #${id}`;
+        tituloForm.textContent = `Editar Categoría #${id}`;
         btnCancelar.style.display = "inline";
     });
 };
 
 const cancelarEdicion = () => {
     form.reset(); modoEdicion = false; idEditando = null;
-    tituloForm.textContent = "Registrar Rol";
+    tituloForm.textContent = "Registrar Categoría";
     btnCancelar.style.display = "none";
 };
 
-const eliminarRol = (id) => {
-    if (!confirm(`¿Eliminar rol #${id}?`)) return;
-    fetch(`${url}/${id}`, { method: "DELETE" }).then(r => r.json()).then(d => { alert(d.mensaje); cargarRoles(); });
+const eliminar = (id) => {
+    if (!confirm(`¿Eliminar categoría #${id}?`)) return;
+    fetch(`${url}/${id}`, { method: "DELETE" }).then(r => r.json()).then(d => { alert(d.mensaje); cargarCategorias(); });
 };
 
 btnCancelar.addEventListener("click", cancelarEdicion);
-cargarRoles();
+cargarCategorias();
