@@ -103,8 +103,12 @@ async def actualizar_mantenimiento(id_mantenimiento: int, m: MantenimientoUpdate
 async def eliminar_mantenimiento(id_mantenimiento: int, conn=Depends(get_conexion)):
     try:
         async with conn.cursor() as cursor:
+            # Primero eliminar alertas relacionadas (no tienen CASCADE)
+            await cursor.execute("DELETE FROM alertas_mantenimiento WHERE id_mantenimiento = %s", (id_mantenimiento,))
+            # mantenimiento_repuestos tiene ON DELETE CASCADE, se elimina automático
             await cursor.execute("DELETE FROM mantenimientos WHERE id_mantenimiento = %s", (id_mantenimiento,))
             await conn.commit()
             return {"mensaje": "Mantenimiento eliminado exitosamente"}
     except Exception as e:
+        print(f"Error al eliminar mantenimiento: {e}")
         raise HTTPException(status_code=400, detail="Error al eliminar mantenimiento")

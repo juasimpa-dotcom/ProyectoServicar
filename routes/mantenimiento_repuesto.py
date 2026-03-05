@@ -57,7 +57,8 @@ async def insertar(mr: MantenimientoRepuesto, conn=Depends(get_conexion)):
             await conn.commit()
             return {"mensaje": "Repuesto agregado al mantenimiento exitosamente"}
     except Exception as e:
-        raise HTTPException(status_code=400, detail="Error al agregar repuesto al mantenimiento")
+        print(f"Error al insertar mantenimiento_repuesto: {e}")
+        raise HTTPException(status_code=400, detail=str(e))
 
 @router.put("/{id}")
 async def actualizar(id: int, mr: MantenimientoRepuestoUpdate, conn=Depends(get_conexion)):
