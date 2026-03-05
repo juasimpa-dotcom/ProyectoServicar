@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SERVICAR - Reportes</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #1a1a2e; color: #eee; }
+
+        .navbar {
+            background: #16213e;
+            padding: 10px 20px;
+            border-bottom: 2px solid #e94560;
+        }
+        .navbar a { color: #e94560; text-decoration: none; font-weight: bold; }
+
+        header {
+            background: #16213e;
+            padding: 20px 40px;
+            border-bottom: 1px solid #333;
+        }
+        header h1 { color: #e94560; font-size: 22px; }
+
+        .contenido { padding: 30px 40px; max-width: 1200px; margin: 0 auto; }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 0;
+        }
+
+        .tab {
+            padding: 10px 24px;
+            background: #16213e;
+            border: 1px solid #333;
+            border-bottom: none;
+            border-radius: 6px 6px 0 0;
+            cursor: pointer;
+            color: #aaa;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .tab.activo {
+            background: #e94560;
+            color: #fff;
+            border-color: #e94560;
+        }
+
+        .panel { display: none; }
+        .panel.activo { display: block; }
+
+        .filtros {
+            background: #16213e;
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filtros label { font-size: 13px; color: #aaa; }
+
+        .filtros input {
+            padding: 8px 12px;
+            background: #0f3460;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #eee;
+            font-size: 13px;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .btn-primary { background: #e94560; color: #fff; }
+        .btn-secondary { background: #0f3460; color: #eee; }
+
+        .resumen {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card-resumen {
+            background: #16213e;
+            border: 1px solid #2a2a4a;
+            border-radius: 8px;
+            padding: 16px 24px;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .card-resumen .numero { font-size: 28px; font-weight: bold; color: #e94560; }
+        .card-resumen .etiqueta { font-size: 12px; color: #888; margin-top: 4px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead tr { background: #e94560; }
+        thead th { padding: 10px 12px; text-align: left; font-weight: bold; }
+
+        tbody tr { border-bottom: 1px solid #2a2a4a; }
+        tbody tr:hover { background: #1f2d50; }
+        tbody td { padding: 9px 12px; }
+
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .completado  { background: #1a5e38; color: #4caf50; }
+        .en_proceso  { background: #1a3d5e; color: #42a5f5; }
+        .pendiente   { background: #5e4a1a; color: #ffb300; }
+        .cancelado   { background: #5e1a1a; color: #ef5350; }
+
+        .sin-datos { text-align: center; padding: 40px; color: #555; font-size: 15px; }
+
+        .tabla-wrap { overflow-x: auto; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="../index.html">← Menú Principal</a>
+</div>
+
+<header>
+    <h1>📊 Reportes SERVICAR</h1>
+</header>
+
+<div class="contenido">
+
+    <!-- TABS -->
+    <div class="tabs">
+        <div class="tab activo" onclick="cambiarTab('historial', this)">📋 Historial de Mantenimientos</div>
+        <div class="tab" onclick="cambiarTab('alertas', this)">🔔 Alertas Pendientes</div>
+    </div>
+
+    <!-- PANEL 1: HISTORIAL -->
+    <div id="panel-historial" class="panel activo">
+
+        <div class="filtros">
+            <label>Filtrar por placa:</label>
+            <input type="text" id="filtro-placa" placeholder="Ej: ABC-1234">
+            <button class="btn btn-primary" onclick="buscarPorPlaca()">Buscar</button>
+            <button class="btn btn-secondary" onclick="cargarHistorial()">Ver Todos</button>
+        </div>
+
+        <div class="resumen" id="resumen-historial"></div>
+
+        <div class="tabla-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Placa</th>
+                        <th>Propietario</th>
+                        <th>Marca / Modelo</th>
+                        <th>Tipo Servicio</th>
+                        <th>Categoría</th>
+                        <th>Fecha</th>
+                        <th>Km</th>
+                        <th>Mecánico</th>
+                        <th>Mano Obra</th>
+                        <th>Repuestos</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-historial">
+                    <tr><td colspan="13" class="sin-datos">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PANEL 2: ALERTAS PENDIENTES -->
+    <div id="panel-alertas" class="panel">
+
+        <div class="filtros">
+            <label>Filtrar por email:</label>
+            <input type="text" id="filtro-email" placeholder="Ej: cliente@gmail.com">
+            <button class="btn btn-primary" onclick="buscarPorEmail()">Buscar</button>
+            <button class="btn btn-secondary" onclick="cargarAlertas()">Ver Todas</button>
+        </div>
+
+        <div class="resumen" id="resumen-alertas"></div>
+
+        <div class="tabla-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Placa</th>
+                        <th>Propietario</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Servicio Pendiente</th>
+                        <th>Tipo Alerta</th>
+                        <th>Fecha Alerta</th>
+                        <th>Km Alerta</th>
+                        <th>Km Actual</th>
+                        <th>Mensaje</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-alertas">
+                    <tr><td colspan="11" class="sin-datos">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script src="reporte.js"></script>
+</body>
+</html>

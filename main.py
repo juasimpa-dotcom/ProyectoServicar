@@ -5,7 +5,7 @@ from routes import (
     usuario, vehiculo, tipo_servicio, mantenimiento,
     rol, marca, modelo, tipo_combustible, tipo_transmision,
     categoria_mantenimiento, mecanico, repuesto, alerta,
-    mantenimiento_repuesto
+    mantenimiento_repuesto, reporte
 )
 
 app = FastAPI(
@@ -40,3 +40,6 @@ app.include_router(mecanico.router,                prefix="/mecanicos")
 app.include_router(repuesto.router,                prefix="/repuestos")
 app.include_router(alerta.router,                  prefix="/alertas")
 app.include_router(mantenimiento_repuesto.router,  prefix="/mantenimiento-repuestos")
+
+# Reportes
+app.include_router(reporte.router, prefix="/reportes")
