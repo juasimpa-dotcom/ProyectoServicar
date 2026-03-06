@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><title>SERVICAR - Vehículos</title></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SERVICAR — Vehículos</title><link rel="stylesheet" href="../servicar.css"></head>
 <body>
-    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
-        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
-    </div>
-    <h1>SERVICAR - Gestión de Vehículos</h1>
-    <h2 id="titulo-form">Registrar Vehículo</h2>
-    <form id="form-vehiculo">
-        <label>ID Usuario:</label><br>
-        <input type="number" id="id_usuario" required><br><br>
-        <label>ID Modelo:</label><br>
-        <input type="number" id="id_modelo" required><br><br>
-        <label>ID Combustible:</label><br>
-        <input type="number" id="id_combustible" required><br><br>
-        <label>ID Transmisión:</label><br>
-        <input type="number" id="id_transmision" required><br><br>
-        <label>Placa:</label><br>
-        <input type="text" id="placa" required><br><br>
-        <label>Año de Fabricación:</label><br>
-        <input type="number" id="anio_fabricacion" required><br><br>
-        <label>Color:</label><br>
-        <input type="text" id="color"><br><br>
-        <label>Nro. Chasis:</label><br>
-        <input type="text" id="numero_chasis"><br><br>
-        <label>Nro. Motor:</label><br>
-        <input type="text" id="numero_motor"><br><br>
-        <label>Kilometraje Actual:</label><br>
-        <input type="number" id="kilometraje_actual" value="0"><br><br>
-        <label>Activo:</label>
-        <input type="checkbox" id="activo" checked><br><br>
-        <button type="submit">Guardar</button>
-        <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+<div class="navbar"><a href="../index.html">← Menú</a><span class="breadcrumb">/ Vehículos</span></div>
+<div class="page-header"><h1>🚗 <span>Vehículos</span></h1><p>Registro y gestión de la flota vehicular</p></div>
+<div class="contenido">
+  <div class="form-card">
+    <div class="form-title" id="titulo-form">➕ Registrar Vehículo</div>
+    <form id="form">
+      <div class="form-grid">
+        <div class="form-group"><label>ID Usuario</label><input type="number" id="id_usuario" placeholder="ID propietario" required></div>
+        <div class="form-group"><label>ID Modelo</label><input type="number" id="id_modelo" placeholder="ID modelo" required></div>
+        <div class="form-group"><label>ID Combustible</label><input type="number" id="id_combustible" placeholder="ID combustible" required></div>
+        <div class="form-group"><label>ID Transmisión</label><input type="number" id="id_transmision" placeholder="ID transmisión" required></div>
+        <div class="form-group"><label>Placa</label><input type="text" id="placa" placeholder="Ej: ABC-1234" required></div>
+        <div class="form-group"><label>Año de Fabricación</label><input type="number" id="anio_fabricacion" placeholder="Ej: 2020" required></div>
+        <div class="form-group"><label>Color</label><input type="text" id="color" placeholder="Ej: Blanco"></div>
+        <div class="form-group"><label>Nro. Chasis</label><input type="text" id="numero_chasis" placeholder="Número de chasis"></div>
+        <div class="form-group"><label>Nro. Motor</label><input type="text" id="numero_motor" placeholder="Número de motor"></div>
+        <div class="form-group"><label>Kilometraje Actual</label><input type="number" id="kilometraje_actual" value="0" min="0"></div>
+        <div class="form-group"><div class="check-group"><input type="checkbox" id="activo" checked><label for="activo">Vehículo activo</label></div></div>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary">💾 Guardar</button>
+        <button type="button" id="btn-cancelar" class="btn btn-secondary" style="display:none">✕ Cancelar</button>
+      </div>
     </form>
-    <hr>
-    <h2>Listado de Vehículos</h2>
-    <ul id="data"><li>Cargando...</li></ul>
-    <script src="vehiculo.js"></script>
-</body>
-</html>
+  </div>
+  <div class="list-header"><div class="list-title">📋 Listado de Vehículos <span class="list-count" id="count">0</span></div></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>ID</th><th>Placa</th><th>Año</th><th>Color</th><th>Km Actual</th><th>ID Usuario</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody id="tbody"><tr><td colspan="8" class="sin-datos">Cargando...</td></tr></tbody>
+  </table></div>
+</div>
+<script src="../servicar.js"></script>
+<script src="vehiculo.js"></script>
+</body></html>

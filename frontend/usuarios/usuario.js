@@ -1,66 +1,127 @@
 const url = "http://localhost:8000/usuarios";
-const contenedor = document.getElementById("data");
-const form = document.getElementById("form-usuario");
+const tbody = document.getElementById("tbody"); // Vinculado a la tabla
+const form = document.getElementById("form");    // Coincide con id="form" en el HTML
 const tituloForm = document.getElementById("titulo-form");
 const btnCancelar = document.getElementById("btn-cancelar");
-let modoEdicion = false, idEditando = null;
+const countSpan = document.getElementById("count");
 
+let modoEdicion = false;
+let idEditando = null;
+
+// --- 1. GET: Cargar Usuarios ---
 const cargarUsuarios = () => {
-    fetch(url).then(r => r.json()).then(data => {
-        let resultado = "";
-        for (let i = 0; i < data.length; i++) {
-            resultado += `<li>
-                <p><b>ID:</b> ${data[i].id_usuario} | <b>Nombre:</b> ${data[i].nombres} ${data[i].apellidos} | <b>Email:</b> ${data[i].email} | <b>Activo:</b> ${data[i].activo ? "Sí" : "No"}</p>
-                <button onclick="prepararEdicion(${data[i].id_usuario})">Editar</button>
-                <button onclick="eliminar(${data[i].id_usuario})">Eliminar</button><hr></li>`;
-        }
-        contenedor.innerHTML = resultado;
-    });
+    fetch(url)
+        .then(r => r.json())
+        .then(data => {
+            let resultado = "";
+            countSpan.textContent = data.length;
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="sin-datos">No hay usuarios registrados</td></tr>`;
+                return;
+            }
+
+            data.forEach(user => {
+                resultado += `
+                <tr>
+                    <td>${user.id_usuario}</td>
+                    <td>**${user.nombres}**</td>
+                    <td>${user.apellidos}</td>
+                    <td>${user.email}</td>
+                    <td>${user.telefono ?? "-"}</td>
+                    <td><small>Rol ID:</small> ${user.id_rol}</td>
+                    <td>
+                        <span class="badge ${user.activo ? 'active' : 'inactive'}">
+                            ${user.activo ? "Activo" : "Inactivo"}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn-edit" onclick="prepararEdicion(${user.id_usuario})">✏️</button>
+                        <button class="btn-delete" onclick="eliminar(${user.id_usuario})">🗑️</button>
+                    </td>
+                </tr>`;
+            });
+            tbody.innerHTML = resultado;
+        })
+        .catch(e => {
+            console.error("Error:", e);
+            tbody.innerHTML = `<tr><td colspan="8" class="sin-datos">Error al cargar la lista de usuarios</td></tr>`;
+        });
 };
 
+// --- 2. POST & PUT: Guardar ---
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     const datos = {
-        id_rol: parseInt(document.getElementById("id_rol").value),
-        nombres: document.getElementById("nombres").value,
+        id_rol:    parseInt(document.getElementById("id_rol").value),
+        nombres:   document.getElementById("nombres").value,
         apellidos: document.getElementById("apellidos").value,
-        email: document.getElementById("email").value,
-        telefono: document.getElementById("telefono").value || null,
-        activo: document.getElementById("activo").checked
+        email:     document.getElementById("email").value,
+        telefono:  document.getElementById("telefono").value || null,
+        activo:    document.getElementById("activo").checked
     };
-    if (modoEdicion) {
-        fetch(`${url}/${idEditando}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) })
-        .then(r => r.json()).then(d => { alert(d.mensaje); cancelarEdicion(); cargarUsuarios(); });
-    } else {
-        fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) })
-        .then(r => r.json()).then(d => { alert(d.mensaje); form.reset(); cargarUsuarios(); });
-    }
+
+    const metodo = modoEdicion ? "PUT" : "POST";
+    const endpoint = modoEdicion ? `${url}/${idEditando}` : url;
+
+    fetch(endpoint, {
+        method: metodo,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    })
+    .then(r => r.json())
+    .then(d => {
+        alert(d.mensaje || "Datos de usuario guardados");
+        cancelarEdicion();
+        cargarUsuarios();
+    })
+    .catch(e => alert("Error al procesar el usuario"));
 });
 
+// --- 3. GET (Single): Preparar Edición ---
 const prepararEdicion = (id) => {
-    fetch(`${url}/${id}`).then(r => r.json()).then(data => {
-        document.getElementById("id_rol").value    = data.id_rol;
-        document.getElementById("nombres").value   = data.nombres;
-        document.getElementById("apellidos").value = data.apellidos;
-        document.getElementById("email").value     = data.email;
-        document.getElementById("telefono").value  = data.telefono ?? "";
-        document.getElementById("activo").checked  = data.activo;
-        modoEdicion = true; idEditando = id;
-        tituloForm.textContent = `Editar Usuario #${id}`;
-        btnCancelar.style.display = "inline";
-    });
+    fetch(`${url}/${id}`)
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById("id_rol").value    = data.id_rol;
+            document.getElementById("nombres").value   = data.nombres;
+            document.getElementById("apellidos").value = data.apellidos;
+            document.getElementById("email").value     = data.email;
+            document.getElementById("telefono").value  = data.telefono ?? "";
+            document.getElementById("activo").checked  = data.activo;
+            
+            modoEdicion = true;
+            idEditando = id;
+            tituloForm.textContent = `📝 Editando Usuario #${id}`;
+            btnCancelar.style.display = "inline-block";
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 };
 
+// --- 4. DELETE: Eliminar ---
+const eliminar = (id) => {
+    if (!confirm(`¿Deseas eliminar al usuario #${id}?`)) return;
+    
+    fetch(`${url}/${id}`, { method: "DELETE" })
+        .then(r => r.json())
+        .then(d => {
+            alert(d.mensaje || "Usuario eliminado");
+            cargarUsuarios();
+        });
+};
+
+// --- Utilidades ---
 const cancelarEdicion = () => {
-    form.reset(); modoEdicion = false; idEditando = null;
-    tituloForm.textContent = "Registrar Usuario";
+    form.reset();
+    modoEdicion = false;
+    idEditando = null;
+    tituloForm.textContent = "➕ Registrar Usuario";
     btnCancelar.style.display = "none";
 };
 
-const eliminar = (id) => {
-    if (!confirm(`¿Eliminar usuario #${id}?`)) return;
-    fetch(`${url}/${id}`, { method: "DELETE" }).then(r => r.json()).then(d => { alert(d.mensaje); cargarUsuarios(); });
-};
-
 btnCancelar.addEventListener("click", cancelarEdicion);
+
+// Iniciar al cargar la página
+document.addEventListener("DOMContentLoaded", cargarUsuarios);
 cargarUsuarios();

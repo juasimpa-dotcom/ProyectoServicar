@@ -1,50 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><title>SERVICAR - Alertas</title></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SERVICAR — Alertas</title><link rel="stylesheet" href="../servicar.css"></head>
 <body>
-    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
-        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
-    </div>
-    <h1>SERVICAR - Alertas de Mantenimiento</h1>
-    <h2 id="titulo-form">Registrar Alerta</h2>
-    <form id="form-alerta">
-        <label>ID Vehículo:</label><br>
-        <input type="number" id="id_vehiculo" required><br><br>
-        <label>ID Tipo Servicio:</label><br>
-        <input type="number" id="id_tipo_servicio" required><br><br>
-        <label>ID Mantenimiento (opcional):</label><br>
-        <input type="number" id="id_mantenimiento"><br><br>
-        <label>Tipo Alerta:</label><br>
-        <select id="tipo_alerta">
+<div class="navbar"><a href="../index.html">← Menú</a><span class="breadcrumb">/ Alertas</span></div>
+<div class="page-header"><h1>🔔 <span>Alertas</span> de Mantenimiento</h1><p>Recordatorios automáticos por km o fecha</p></div>
+<div class="contenido">
+  <div class="form-card">
+    <div class="form-title" id="titulo-form">➕ Registrar Alerta</div>
+    <form id="form">
+      <div class="form-grid">
+        <div class="form-group"><label>ID Vehículo</label><input type="number" id="id_vehiculo" placeholder="ID vehículo" required></div>
+        <div class="form-group"><label>ID Tipo Servicio</label><input type="number" id="id_tipo_servicio" placeholder="ID tipo servicio" required></div>
+        <div class="form-group"><label>ID Mantenimiento (opcional)</label><input type="number" id="id_mantenimiento" placeholder="ID mantenimiento"></div>
+        <div class="form-group"><label>Tipo de Alerta</label>
+          <select id="tipo_alerta">
             <option value="por_km">Por Km</option>
             <option value="por_fecha">Por Fecha</option>
             <option value="ambos">Ambos</option>
-        </select><br><br>
-        <label>Fecha Alerta:</label><br>
-        <input type="date" id="fecha_alerta"><br><br>
-        <label>Kilometraje Alerta:</label><br>
-        <input type="number" id="kilometraje_alerta"><br><br>
-        <label>Mensaje:</label><br>
-        <textarea id="mensaje" rows="3" cols="40"></textarea><br><br>
-        <label>Estado:</label><br>
-        <select id="estado">
+          </select>
+        </div>
+        <div class="form-group"><label>Fecha Alerta</label><input type="date" id="fecha_alerta"></div>
+        <div class="form-group"><label>Kilometraje Alerta</label><input type="number" id="kilometraje_alerta" placeholder="Km de alerta"></div>
+        <div class="form-group"><label>Estado</label>
+          <select id="estado">
             <option value="pendiente">Pendiente</option>
             <option value="visto">Visto</option>
             <option value="atendido">Atendido</option>
             <option value="ignorado">Ignorado</option>
-        </select><br><br>
-        <button type="submit">Guardar</button>
-        <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+          </select>
+        </div>
+        <div class="form-group full"><label>Mensaje</label><textarea id="mensaje" placeholder="Mensaje de la alerta..."></textarea></div>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary">💾 Guardar</button>
+        <button type="button" id="btn-cancelar" class="btn btn-secondary" style="display:none">✕ Cancelar</button>
+      </div>
     </form>
-    <hr>
-    <h2>Filtrar Alertas</h2>
-    <label>ID Vehículo:</label>
-    <input type="number" id="filtro_vehiculo">
-    <button onclick="cargarPorVehiculo()">Buscar</button>
-    <button onclick="cargarPendientes()">Solo Pendientes</button>
-    <button onclick="cargarTodas()">Ver Todas</button>
-    <hr>
-    <ul id="data"><li>Cargando...</li></ul>
-    <script src="alerta.js"></script>
-</body>
-</html>
+  </div>
+  <div class="filtro-card">
+    <span>🔍 Filtrar:</span>
+    <input type="number" id="filtro_v" placeholder="ID Vehículo">
+    <button class="btn btn-primary" onclick="filtrarV()">Por Vehículo</button>
+    <button class="btn btn-secondary" style="border-color:#ffb300;color:#ffb300;" onclick="cargarPendientes()">⚠️ Pendientes</button>
+    <button class="btn btn-secondary" onclick="cargar()">Ver Todas</button>
+  </div>
+  <div class="list-header"><div class="list-title">📋 Listado de Alertas <span class="list-count" id="count">0</span></div></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>ID</th><th>Vehículo</th><th>Tipo Servicio</th><th>Tipo Alerta</th><th>Fecha</th><th>Km Alerta</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody id="tbody"><tr><td colspan="8" class="sin-datos">Cargando...</td></tr></tbody>
+  </table></div>
+</div>
+<script src="../servicar.js"></script>
+<script src="alerta.js"></script>
+</body></html>

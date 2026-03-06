@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><title>SERVICAR - Repuestos por Mantenimiento</title></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SERVICAR — Repuestos por Mantenimiento</title><link rel="stylesheet" href="../servicar.css"></head>
 <body>
-    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
-        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
-    </div>
-    <h1>SERVICAR - Repuestos por Mantenimiento</h1>
-    <h2 id="titulo-form">Agregar Repuesto a Mantenimiento</h2>
-    <form id="form-mr">
-        <label>ID Mantenimiento:</label><br>
-        <input type="number" id="id_mantenimiento" required><br><br>
-        <label>ID Repuesto:</label><br>
-        <input type="number" id="id_repuesto" required><br><br>
-        <label>Cantidad:</label><br>
-        <input type="number" id="cantidad" step="0.001" min="0.001" value="1" required><br><br>
-        <label>Precio Unitario (Bs.):</label><br>
-        <input type="number" id="precio_unitario" step="0.01" min="0" required><br><br>
-        <button type="submit">Guardar</button>
-        <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+<div class="navbar"><a href="../index.html">← Menú</a><span class="breadcrumb">/ Repuestos por Mantenimiento</span></div>
+<div class="page-header"><h1>🔗 <span>Repuestos</span> por Mantenimiento</h1><p>Piezas y materiales usados en cada servicio</p></div>
+<div class="contenido">
+  <div class="form-card">
+    <div class="form-title" id="titulo-form">➕ Agregar Repuesto a Mantenimiento</div>
+    <form id="form">
+      <div class="form-grid">
+        <div class="form-group"><label>ID Mantenimiento</label><input type="number" id="id_mantenimiento" placeholder="ID mantenimiento" required></div>
+        <div class="form-group"><label>ID Repuesto</label><input type="number" id="id_repuesto" placeholder="ID repuesto" required></div>
+        <div class="form-group"><label>Cantidad</label><input type="number" id="cantidad" step="0.001" min="0.001" value="1" required></div>
+        <div class="form-group"><label>Precio Unitario (Bs.)</label><input type="number" id="precio_unitario" step="0.01" min="0" placeholder="0.00" required></div>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary">💾 Guardar</button>
+        <button type="button" id="btn-cancelar" class="btn btn-secondary" style="display:none">✕ Cancelar</button>
+      </div>
     </form>
-    <hr>
-    <h2>Filtrar por Mantenimiento</h2>
-    <label>ID Mantenimiento:</label>
-    <input type="number" id="filtro_mantenimiento">
-    <button onclick="cargarPorMantenimiento()">Buscar</button>
-    <button onclick="cargarTodos()">Ver Todos</button>
-    <hr>
-    <ul id="data"><li>Cargando...</li></ul>
-    <script src="mantenimiento_repuesto.js"></script>
-</body>
-</html>
+  </div>
+  <div class="filtro-card">
+    <span>🔍 Filtrar:</span>
+    <input type="number" id="filtro_m" placeholder="ID Mantenimiento">
+    <button class="btn btn-primary" onclick="filtrarM()">Buscar</button>
+    <button class="btn btn-secondary" onclick="cargar()">Ver Todos</button>
+  </div>
+  <div class="list-header"><div class="list-title">📋 Listado <span class="list-count" id="count">0</span></div></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>ID</th><th>Mantenimiento</th><th>Repuesto</th><th>Cantidad</th><th>Precio Unit.</th><th>Subtotal</th><th>Acciones</th></tr></thead>
+    <tbody id="tbody"><tr><td colspan="7" class="sin-datos">Cargando...</td></tr></tbody>
+  </table></div>
+</div>
+<script src="../servicar.js"></script>
+<script src="mantenimiento_repuesto.js"></script>
+</body></html>

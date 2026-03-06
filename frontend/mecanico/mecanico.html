@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><title>SERVICAR - Mecánicos</title></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SERVICAR — Mecánicos</title><link rel="stylesheet" href="../servicar.css"></head>
 <body>
-    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
-        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
-    </div>
-    <h1>SERVICAR - Gestión de Mecánicos</h1>
-    <h2 id="titulo-form">Registrar Mecánico</h2>
-    <form id="form-mecanico">
-        <label>ID Usuario (opcional):</label><br>
-        <input type="number" id="id_usuario"><br><br>
-        <label>Nombres:</label><br>
-        <input type="text" id="nombres" required><br><br>
-        <label>Apellidos:</label><br>
-        <input type="text" id="apellidos" required><br><br>
-        <label>Especialidad:</label><br>
-        <input type="text" id="especialidad"><br><br>
-        <label>Teléfono:</label><br>
-        <input type="text" id="telefono"><br><br>
-        <label>Activo:</label>
-        <input type="checkbox" id="activo" checked><br><br>
-        <button type="submit">Guardar</button>
-        <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+<div class="navbar"><a href="../index.html">← Menú</a><span class="breadcrumb">/ Mecánicos</span></div>
+<div class="page-header"><h1>🔧 <span>Mecánicos</span></h1><p>Técnicos que realizan los servicios de mantenimiento</p></div>
+<div class="contenido">
+  <div class="form-card">
+    <div class="form-title" id="titulo-form">➕ Registrar Mecánico</div>
+    <form id="form">
+      <div class="form-grid">
+        <div class="form-group"><label>Nombres</label><input type="text" id="nombres" placeholder="Nombres" required></div>
+        <div class="form-group"><label>Apellidos</label><input type="text" id="apellidos" placeholder="Apellidos" required></div>
+        <div class="form-group"><label>Especialidad</label><input type="text" id="especialidad" placeholder="Ej: Motor y Transmisión"></div>
+        <div class="form-group"><label>Teléfono</label><input type="text" id="telefono" placeholder="Ej: 77798765"></div>
+        <div class="form-group"><div class="check-group"><input type="checkbox" id="activo" checked><label for="activo">Mecánico activo</label></div></div>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary">💾 Guardar</button>
+        <button type="button" id="btn-cancelar" class="btn btn-secondary" style="display:none">✕ Cancelar</button>
+      </div>
     </form>
-    <hr>
-    <h2>Listado de Mecánicos</h2>
-    <ul id="data"><li>Cargando...</li></ul>
-    <script src="mecanico.js"></script>
-</body>
-</html>
+  </div>
+  <div class="list-header"><div class="list-title">📋 Listado de Mecánicos <span class="list-count" id="count">0</span></div></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>ID</th><th>Nombres</th><th>Apellidos</th><th>Especialidad</th><th>Teléfono</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody id="tbody"><tr><td colspan="7" class="sin-datos">Cargando...</td></tr></tbody>
+  </table></div>
+</div>
+<script src="../servicar.js"></script>
+<script src="mecanico.js"></script>
+</body></html>

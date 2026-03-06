@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><title>SERVICAR - Tipos de Combustible</title></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SERVICAR — Combustibles</title><link rel="stylesheet" href="../servicar.css"></head>
 <body>
-    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
-        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
-    </div>
-    <h1>SERVICAR - Tipos de Combustible</h1>
-    <h2 id="titulo-form">Registrar Tipo de Combustible</h2>
-    <form id="form-combustible">
-        <label>Nombre:</label><br>
-        <input type="text" id="nombre" required><br><br>
-        <button type="submit">Guardar</button>
-        <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+<div class="navbar"><a href="../index.html">← Menú</a><span class="breadcrumb">/ Tipos de Combustible</span></div>
+<div class="page-header"><h1>⛽ <span>Tipos de Combustible</span></h1><p>Gasolina, Diésel, Eléctrico y más</p></div>
+<div class="contenido">
+  <div class="form-card">
+    <div class="form-title" id="titulo-form">➕ Registrar Combustible</div>
+    <form id="form">
+      <div class="form-grid">
+        <div class="form-group"><label>Nombre</label><input type="text" id="nombre" placeholder="Ej: Gasolina" required></div>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary">💾 Guardar</button>
+        <button type="button" id="btn-cancelar" class="btn btn-secondary" style="display:none">✕ Cancelar</button>
+      </div>
     </form>
-    <hr>
-    <h2>Listado</h2>
-    <ul id="data"><li>Cargando...</li></ul>
-    <script src="tipo_combustible.js"></script>
-</body>
-</html>
+  </div>
+  <div class="list-header"><div class="list-title">📋 Listado <span class="list-count" id="count">0</span></div></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>ID</th><th>Nombre</th><th>Acciones</th></tr></thead>
+    <tbody id="tbody"><tr><td colspan="3" class="sin-datos">Cargando...</td></tr></tbody>
+  </table></div>
+</div>
+<script src="../servicar.js"></script>
+<script src="tipo_combustible.js"></script>
+</body></html>

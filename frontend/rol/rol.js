@@ -1,25 +1,52 @@
 const url = "http://localhost:8000/roles";
-const contenedor = document.getElementById("data");
-const form = document.getElementById("form-rol");
+const tbody = document.getElementById("tbody"); // Cambiado de 'data' a 'tbody'
+const form = document.getElementById("form");    // Cambiado de 'form-rol' a 'form'
 const tituloForm = document.getElementById("titulo-form");
 const btnCancelar = document.getElementById("btn-cancelar");
-let modoEdicion = false, idEditando = null;
+const countSpan = document.getElementById("count");
 
+let modoEdicion = false;
+let idEditando = null;
+
+// --- 1. GET: Cargar Roles en la Tabla ---
 const cargarRoles = () => {
-    fetch(url).then(r => r.json()).then(data => {
-        let resultado = "";
-        for (let i = 0; i < data.length; i++) {
-            resultado += `<li>
-                <p><b>ID:</b> ${data[i].id_rol} | <b>Nombre:</b> ${data[i].nombre} | <b>Activo:</b> ${data[i].activo ? "Sí" : "No"}</p>
-                <p>${data[i].descripcion ?? ""}</p>
-                <button onclick="prepararEdicion(${data[i].id_rol})">Editar</button>
-                <button onclick="eliminarRol(${data[i].id_rol})">Eliminar</button><hr>
-            </li>`;
-        }
-        contenedor.innerHTML = resultado;
-    }).catch(e => console.log("Error:", e));
+    fetch(url)
+        .then(r => r.json())
+        .then(data => {
+            let resultado = "";
+            countSpan.textContent = data.length;
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="sin-datos">No hay roles registrados</td></tr>`;
+                return;
+            }
+
+            data.forEach(rol => {
+                resultado += `
+                <tr>
+                    <td>${rol.id_rol}</td>
+                    <td>**${rol.nombre}**</td>
+                    <td>${rol.descripcion ?? "-"}</td>
+                    <td>
+                        <span class="badge ${rol.activo ? 'active' : 'inactive'}">
+                            ${rol.activo ? "Activo" : "Inactivo"}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn-edit" onclick="prepararEdicion(${rol.id_rol})">✏️</button>
+                        <button class="btn-delete" onclick="eliminarRol(${rol.id_rol})">🗑️</button>
+                    </td>
+                </tr>`;
+            });
+            tbody.innerHTML = resultado;
+        })
+        .catch(e => {
+            console.error("Error:", e);
+            tbody.innerHTML = `<tr><td colspan="5" class="sin-datos">Error de conexión con el servidor</td></tr>`;
+        });
 };
 
+// --- 2. POST & PUT: Guardar ---
 form.addEventListener("submit", (e) => {
     e.preventDefault();
     const datos = {
@@ -27,36 +54,66 @@ form.addEventListener("submit", (e) => {
         descripcion: document.getElementById("descripcion").value || null,
         activo:      document.getElementById("activo").checked
     };
-    if (modoEdicion) {
-        fetch(`${url}/${idEditando}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) })
-        .then(r => r.json()).then(d => { alert(d.mensaje); cancelarEdicion(); cargarRoles(); });
-    } else {
-        fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(datos) })
-        .then(r => r.json()).then(d => { alert(d.mensaje); form.reset(); cargarRoles(); });
-    }
+
+    const metodo = modoEdicion ? "PUT" : "POST";
+    const endpoint = modoEdicion ? `${url}/${idEditando}` : url;
+
+    fetch(endpoint, {
+        method: metodo,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    })
+    .then(r => r.json())
+    .then(d => {
+        alert(d.mensaje || "Operación exitosa");
+        cancelarEdicion();
+        cargarRoles();
+    })
+    .catch(e => alert("Error al guardar los datos"));
 });
 
+// --- 3. GET (Single): Preparar Edición ---
 const prepararEdicion = (id) => {
-    fetch(`${url}/${id}`).then(r => r.json()).then(data => {
-        document.getElementById("nombre").value      = data.nombre;
-        document.getElementById("descripcion").value = data.descripcion ?? "";
-        document.getElementById("activo").checked    = data.activo;
-        modoEdicion = true; idEditando = id;
-        tituloForm.textContent = `Editar Rol #${id}`;
-        btnCancelar.style.display = "inline";
-    });
+    fetch(`${url}/${id}`)
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById("nombre").value      = data.nombre;
+            document.getElementById("descripcion").value = data.descripcion ?? "";
+            document.getElementById("activo").checked    = data.activo;
+            
+            modoEdicion = true;
+            idEditando = id;
+            tituloForm.textContent = `📝 Editando Rol #${id}`;
+            btnCancelar.style.display = "inline-block";
+            
+            // Scroll suave hacia arriba para ver el formulario
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
 };
 
+// --- 4. DELETE: Eliminar ---
+const eliminarRol = (id) => {
+    if (!confirm(`¿Estás seguro de eliminar el rol #${id}?`)) return;
+    
+    fetch(`${url}/${id}`, { method: "DELETE" })
+        .then(r => r.json())
+        .then(d => {
+            alert(d.mensaje || "Rol eliminado");
+            cargarRoles();
+        });
+};
+
+// --- Utilidades ---
 const cancelarEdicion = () => {
-    form.reset(); modoEdicion = false; idEditando = null;
-    tituloForm.textContent = "Registrar Rol";
+    form.reset();
+    modoEdicion = false;
+    idEditando = null;
+    tituloForm.textContent = "➕ Registrar Rol";
     btnCancelar.style.display = "none";
 };
 
-const eliminarRol = (id) => {
-    if (!confirm(`¿Eliminar rol #${id}?`)) return;
-    fetch(`${url}/${id}`, { method: "DELETE" }).then(r => r.json()).then(d => { alert(d.mensaje); cargarRoles(); });
-};
-
 btnCancelar.addEventListener("click", cancelarEdicion);
-cargarRoles();
+
+// Inicializar
+document.addEventListener("DOMContentLoaded", cargarRoles);
+cargarRoles();  

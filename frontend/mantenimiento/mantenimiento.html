@@ -1,52 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><title>SERVICAR - Mantenimientos</title></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SERVICAR — Mantenimientos</title><link rel="stylesheet" href="../servicar.css"></head>
 <body>
-    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
-        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
-    </div>
-    <h1>SERVICAR - Registro de Mantenimientos</h1>
-    <h2 id="titulo-form">Registrar Mantenimiento</h2>
-    <form id="form-m">
-        <label>ID Vehículo:</label><br>
-        <input type="number" id="id_vehiculo" required><br><br>
-        <label>ID Tipo Servicio:</label><br>
-        <input type="number" id="id_tipo_servicio" required><br><br>
-        <label>ID Mecánico (opcional):</label><br>
-        <input type="number" id="id_mecanico"><br><br>
-        <label>ID Usuario Registro:</label><br>
-        <input type="number" id="id_usuario_registro" required><br><br>
-        <label>Fecha Servicio:</label><br>
-        <input type="date" id="fecha_servicio" required><br><br>
-        <label>Kilometraje Servicio:</label><br>
-        <input type="number" id="kilometraje_servicio" required><br><br>
-        <label>Costo Mano de Obra (Bs.):</label><br>
-        <input type="number" id="costo_mano_obra" step="0.01" value="0"><br><br>
-        <label>Observaciones:</label><br>
-        <textarea id="observaciones" rows="3" cols="40"></textarea><br><br>
-        <label>Próxima Fecha:</label><br>
-        <input type="date" id="proxima_fecha"><br><br>
-        <label>Próximo Kilometraje:</label><br>
-        <input type="number" id="proximo_kilometraje"><br><br>
-        <label>Estado:</label><br>
-        <select id="estado">
+<div class="navbar"><a href="../index.html">← Menú</a><span class="breadcrumb">/ Mantenimientos</span></div>
+<div class="page-header"><h1>📋 <span>Mantenimientos</span></h1><p>Registro central de intervenciones a los vehículos</p></div>
+<div class="contenido">
+  <div class="form-card">
+    <div class="form-title" id="titulo-form">➕ Registrar Mantenimiento</div>
+    <form id="form">
+      <div class="form-grid">
+        <div class="form-group"><label>ID Vehículo</label><input type="number" id="id_vehiculo" placeholder="ID vehículo" required></div>
+        <div class="form-group"><label>ID Tipo Servicio</label><input type="number" id="id_tipo_servicio" placeholder="ID tipo servicio" required></div>
+        <div class="form-group"><label>ID Mecánico (opcional)</label><input type="number" id="id_mecanico" placeholder="ID mecánico"></div>
+        <div class="form-group"><label>ID Usuario Registro</label><input type="number" id="id_usuario_registro" placeholder="ID usuario" required></div>
+        <div class="form-group"><label>Fecha de Servicio</label><input type="date" id="fecha_servicio" required></div>
+        <div class="form-group"><label>Kilometraje Servicio</label><input type="number" id="kilometraje_servicio" placeholder="Km al momento del servicio" required></div>
+        <div class="form-group"><label>Costo Mano de Obra (Bs.)</label><input type="number" id="costo_mano_obra" step="0.01" value="0" min="0"></div>
+        <div class="form-group"><label>Estado</label>
+          <select id="estado">
             <option value="completado">Completado</option>
             <option value="en_proceso">En Proceso</option>
             <option value="pendiente">Pendiente</option>
             <option value="cancelado">Cancelado</option>
-        </select><br><br>
-        <button type="submit">Guardar</button>
-        <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+          </select>
+        </div>
+        <div class="form-group"><label>Próxima Fecha</label><input type="date" id="proxima_fecha"></div>
+        <div class="form-group"><label>Próximo Kilometraje</label><input type="number" id="proximo_kilometraje" placeholder="Km próximo servicio"></div>
+        <div class="form-group full"><label>Observaciones</label><textarea id="observaciones" placeholder="Observaciones del servicio..."></textarea></div>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary">💾 Guardar</button>
+        <button type="button" id="btn-cancelar" class="btn btn-secondary" style="display:none">✕ Cancelar</button>
+      </div>
     </form>
-    <hr>
-    <h2>Historial por Vehículo</h2>
-    <label>ID Vehículo:</label>
-    <input type="number" id="filtro_vehiculo">
-    <button onclick="cargarPorVehiculo()">Buscar</button>
-    <button onclick="cargarTodos()">Ver Todos</button>
-    <hr>
-    <h2>Listado de Mantenimientos</h2>
-    <ul id="data"><li>Cargando...</li></ul>
-    <script src="mantenimiento.js"></script>
-</body>
-</html>
+  </div>
+  <div class="filtro-card">
+    <span>🔍 Filtrar por vehículo:</span>
+    <input type="number" id="filtro_v" placeholder="ID Vehículo">
+    <button class="btn btn-primary" onclick="filtrarV()">Buscar</button>
+    <button class="btn btn-secondary" onclick="cargar()">Ver Todos</button>
+  </div>
+  <div class="list-header"><div class="list-title">📋 Historial <span class="list-count" id="count">0</span></div></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>ID</th><th>Vehículo</th><th>Tipo Servicio</th><th>Fecha</th><th>Km</th><th>Mano Obra</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody id="tbody"><tr><td colspan="8" class="sin-datos">Cargando...</td></tr></tbody>
+  </table></div>
+</div>
+<script src="../servicar.js"></script>
+<script src="mantenimiento.js"></script>
+</body></html>

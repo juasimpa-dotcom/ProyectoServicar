@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><meta charset="UTF-8"><title>SERVICAR - Modelos</title></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SERVICAR — Modelos</title><link rel="stylesheet" href="../servicar.css"></head>
 <body>
-    <div style="background:#16213e;padding:10px 20px;border-bottom:2px solid #e94560;">
-        <a href="../index.html" style="color:#e94560;text-decoration:none;font-weight:bold;">← Menú Principal</a>
-    </div>
-    <h1>SERVICAR - Gestión de Modelos</h1>
-    <h2 id="titulo-form">Registrar Modelo</h2>
-    <form id="form-modelo">
-        <label>ID Marca:</label><br>
-        <input type="number" id="id_marca" required><br><br>
-        <label>Nombre del Modelo:</label><br>
-        <input type="text" id="nombre" required><br><br>
-        <label>Activo:</label>
-        <input type="checkbox" id="activo" checked><br><br>
-        <button type="submit">Guardar</button>
-        <button type="button" id="btn-cancelar" style="display:none">Cancelar</button>
+<div class="navbar"><a href="../index.html">← Menú</a><span class="breadcrumb">/ Modelos</span></div>
+<div class="page-header"><h1>🚙 <span>Modelos</span> por Marca</h1><p>Gestiona los modelos de vehículos por marca</p></div>
+<div class="contenido">
+  <div class="form-card">
+    <div class="form-title" id="titulo-form">➕ Registrar Modelo</div>
+    <form id="form">
+      <div class="form-grid">
+        <div class="form-group"><label>ID Marca</label><input type="number" id="id_marca" placeholder="Ej: 1" required></div>
+        <div class="form-group"><label>Nombre del Modelo</label><input type="text" id="nombre" placeholder="Ej: Corolla" required></div>
+        <div class="form-group"><div class="check-group"><input type="checkbox" id="activo" checked><label for="activo">Modelo activo</label></div></div>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary">💾 Guardar</button>
+        <button type="button" id="btn-cancelar" class="btn btn-secondary" style="display:none">✕ Cancelar</button>
+      </div>
     </form>
-    <hr>
-    <h2>Listado de Modelos</h2>
-    <ul id="data"><li>Cargando...</li></ul>
-    <script src="modelo.js"></script>
-</body>
-</html>
+  </div>
+  <div class="list-header"><div class="list-title">📋 Listado <span class="list-count" id="count">0</span></div></div>
+  <div class="tabla-wrap"><table>
+    <thead><tr><th>ID</th><th>ID Marca</th><th>Nombre</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody id="tbody"><tr><td colspan="5" class="sin-datos">Cargando...</td></tr></tbody>
+  </table></div>
+</div>
+<script src="../servicar.js"></script>
+<script src="modelo.js"></script>
+</body></html>
