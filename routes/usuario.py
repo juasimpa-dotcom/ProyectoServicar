@@ -74,6 +74,10 @@ async def actualizar_usuario(id_usuario: int, usuario: UsuarioUpdate, conn=Depen
 async def eliminar_usuario(id_usuario: int, conn=Depends(get_conexion)):
     try:
         async with conn.cursor() as cursor:
+            await cursor.execute("DELETE FROM alertas_mantenimiento WHERE id_vehiculo IN (SELECT id_vehiculo FROM vehiculos WHERE id_usuario = %s)", (id_usuario,))
+            await cursor.execute("DELETE FROM mantenimientos WHERE id_vehiculo IN (SELECT id_vehiculo FROM vehiculos WHERE id_usuario = %s)", (id_usuario,))
+            await cursor.execute("DELETE FROM mantenimientos WHERE id_usuario_registro = %s", (id_usuario,))
+            await cursor.execute("DELETE FROM vehiculos WHERE id_usuario = %s", (id_usuario,))
             await cursor.execute("DELETE FROM usuarios WHERE id_usuario = %s", (id_usuario,))
             await conn.commit()
             return {"mensaje": "Usuario eliminado exitosamente"}
